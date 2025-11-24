@@ -76,3 +76,42 @@ form.addEventListener('submit', (event) => {
     form.reset();
   }
 });
+
+// Function to handle the dark mode toggle
+function toggleTheme() {
+    // 1. Target the <body> tag
+    const body = document.body;
+    
+    // 2. Toggle the 'dark-theme' class on the body
+    body.classList.toggle('dark-theme');
+
+    // Optional: Save the user's preference using local storage
+    if (body.classList.contains('dark-theme')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// Check for stored preference when the page loads
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+}
+
+// Add event listener to the button once the document is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Load the saved theme first
+    loadTheme();
+    
+    // 2. Find the button by its ID ('theme-toggle')
+    const toggleButton = document.getElementById('theme-toggle');
+
+    // 3. Attach the toggle function to the button click event
+    if (toggleButton) {
+        toggleButton.addEventListener('click', toggleTheme);
+    }
+});
