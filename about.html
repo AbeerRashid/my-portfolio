@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>About - Abeer Rashid</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
 
@@ -13,7 +12,7 @@
         <button id="theme-toggle" class="toggle-btn">Toggle Dark Mode</button>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
@@ -21,6 +20,8 @@
     </header>
 
    <section id="about">
+   <a href="images/profile.jpg" id="profile-link"> 
+        <img src="images/profile.jpg" alt="A photo of Abeer Rashid, the portfolio creator." class="profile-pic">
         <h2>About Me</h2>
         <p>
             Hello! I'm Abeer Rashid, a passionate professional building my personal portfolio to showcase my skills and projects.
@@ -40,6 +41,11 @@
     <footer>
         <p>&copy; 2025 Abeer Rashid. All rights reserved.</p>
     </footer>
+    <div id="image-modal" class="modal">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
 <script src="script.js" defer></script>
 </body>
 </html>

@@ -115,3 +115,41 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleButton.addEventListener('click', toggleTheme);
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    // ... your existing Dark Mode code is here ...
+    
+    // IMAGE POPUP (MODAL) LOGIC
+
+    // Get the modal elements
+    const modal = document.getElementById('image-modal');
+    const imgLink = document.getElementById('profile-link');
+    const modalImg = document.getElementById("img01");
+    const closeBtn = document.getElementsByClassName("close-btn")[0];
+
+    // When the user clicks on the image link, open the modal
+    if (imgLink) {
+        imgLink.addEventListener('click', function(event) {
+            // Prevent the browser from navigating to the image directly
+            event.preventDefault(); 
+            
+            modal.style.display = "block";
+            // Set the source of the big image to the href of the link
+            modalImg.src = this.href; 
+        });
+    }
+
+    // When the user clicks on (x), close the modal
+    if (closeBtn) {
+        closeBtn.onclick = function() { 
+            modal.style.display = "none";
+        }
+    }
+    
+    // When the user clicks anywhere outside of the modal content, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+});
