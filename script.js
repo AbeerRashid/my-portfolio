@@ -1,81 +1,90 @@
-// index.html
+// // index.html
+// This block handles the Project Detail Toggle buttons
 const buttons = document.querySelectorAll('.toggle-btn');
 
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    const details = button.nextElementSibling;
-    details.classList.toggle('show');
-    if (details.classList.contains('show')) {
-      button.textContent = 'Hide Details';
-    } else {
-      button.textContent = 'Show Details';
-    }
-  });
-});
+// SAFETY CHECK: Only runs if there are buttons on the page (e.g., projects.html or index.html)
+if (buttons.length > 0) {
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const details = button.nextElementSibling;
+            details.classList.toggle('show');
+            if (details.classList.contains('show')) {
+                button.textContent = 'Hide Details';
+            } else {
+                button.textContent = 'Show Details';
+            }
+        });
+    });
+}
+
 
 // CONTACT FORM VALIDATION
-
 const form = document.getElementById('contact-form');
-const nameInput = document.getElementById('name');
-const emailInput = document.getElementById('email');
-const messageInput = document.getElementById('message');
 
-function showError(input, message) {
-  let error = input.nextElementSibling;
+// SAFETY CHECK: Only executes the validation logic if the contact form is present
+if (form) { 
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
 
-  if (!error || !error.classList.contains('error-message')) {
-    error = document.createElement('span');
-    error.classList.add('error-message');
-    input.after(error);
-  }
+    function showError(input, message) {
+        let error = input.nextElementSibling;
 
-  error.textContent = message;
-  input.classList.add('input-error');
+        if (!error || !error.classList.contains('error-message')) {
+            error = document.createElement('span');
+            error.classList.add('error-message');
+            input.after(error);
+        }
+
+        error.textContent = message;
+        input.classList.add('input-error');
+    }
+
+    function clearError(input) {
+        const error = input.nextElementSibling;
+        if (error && error.classList.contains('error-message')) {
+            error.textContent = '';
+        }
+        input.classList.remove('input-error');
+    }
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let isValid = true;
+
+        if (nameInput.value.trim() === '') {
+            showError(nameInput, 'Please enter your name.');
+            isValid = false;
+        } else {
+            clearError(nameInput);
+        }
+
+        const emailValue = emailInput.value.trim();
+        if (emailValue === '') {
+            showError(emailInput, 'Please enter your email.');
+            isValid = false;
+        } else if (!emailValue.includes('@') || !emailValue.includes('.')) {
+            showError(emailInput, 'Please enter a valid email address.');
+            isValid = false;
+        } else {
+            clearError(emailInput);
+        }
+
+        if (messageInput.value.trim() === '') {
+            showError(messageInput, 'Please enter a message.');
+            isValid = false;
+        } else {
+            clearError(messageInput);
+        }
+
+        if (isValid) {
+            alert('Thank you! Your message has been sent successfully.');
+            form.reset();
+        }
+    });
 }
 
-function clearError(input) {
-  const error = input.nextElementSibling;
-  if (error && error.classList.contains('error-message')) {
-    error.textContent = '';
-  }
-  input.classList.remove('input-error');
-}
-
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-
-  let isValid = true;
-
-  if (nameInput.value.trim() === '') {
-    showError(nameInput, 'Please enter your name.');
-    isValid = false;
-  } else {
-    clearError(nameInput);
-  }
-
-  const emailValue = emailInput.value.trim();
-  if (emailValue === '') {
-    showError(emailInput, 'Please enter your email.');
-    isValid = false;
-  } else if (!emailValue.includes('@') || !emailValue.includes('.')) {
-    showError(emailInput, 'Please enter a valid email address.');
-    isValid = false;
-  } else {
-    clearError(emailInput);
-  }
-
-  if (messageInput.value.trim() === '') {
-    showError(messageInput, 'Please enter a message.');
-    isValid = false;
-  } else {
-    clearError(messageInput);
-  }
-
-  if (isValid) {
-    alert('Thank you! Your message has been sent successfully.');
-    form.reset();
-  }
-});
 
 // Function to handle the dark mode toggle
 function toggleTheme() {
@@ -92,7 +101,6 @@ function toggleTheme() {
 // Check for stored preference when the page loads
 function loadTheme() {
     const savedTheme = localStorage.getItem('theme');
-    
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
     }
@@ -112,40 +120,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// MODAL/IMAGE POPUP LOGIC
 document.addEventListener('DOMContentLoaded', () => {
-    // ... your existing Dark Mode code is here ...
-    
-    // IMAGE POPUP (MODAL) LOGIC
-
-    // Get the modal elements
-    const modal = document.getElementById('image-modal');
     const imgLink = document.getElementById('profile-link');
-    const modalImg = document.getElementById("img01");
-    const closeBtn = document.getElementsByClassName("close-btn")[0];
+    
+    // SAFETY CHECK: Only executes the modal logic if the profile image link exists
+    if (imgLink) { 
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById("img01");
+        const closeBtn = document.getElementsByClassName("close-btn")[0];
 
-    // When the user clicks on the image link, open the modal
-    if (imgLink) {
+        // When the user clicks on the image link, open the modal
         imgLink.addEventListener('click', function(event) {
-            // Prevent the browser from navigating to the image directly
             event.preventDefault(); 
             
             modal.style.display = "block";
-            // Set the source of the big image to the href of the link
             modalImg.src = this.href; 
         });
-    }
 
-    // When the user clicks on (x), close the modal
-    if (closeBtn) {
-        closeBtn.onclick = function() { 
-            modal.style.display = "none";
+        // When the user clicks on (x), close the modal
+        if (closeBtn) {
+            closeBtn.onclick = function() { 
+                modal.style.display = "none";
+            }
         }
-    }
-    
-    // When the user clicks anywhere outside of the modal content, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
+        
+        // When the user clicks anywhere outside of the modal content, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     }
 });
