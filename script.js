@@ -9,9 +9,9 @@ if (buttons.length > 0) {
             const details = button.nextElementSibling;
             details.classList.toggle('show');
             if (details.classList.contains('show')) {
-                button.textContent = 'Hide Details';
+                button.textContent = 'Dark Mode';
             } else {
-                button.textContent = 'Show Details';
+                button.textContent = 'Light Mode';
             }
         });
     });
