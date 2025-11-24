@@ -79,13 +79,9 @@ form.addEventListener('submit', (event) => {
 
 // Function to handle the dark mode toggle
 function toggleTheme() {
-    // 1. Target the <body> tag
     const body = document.body;
-    
-    // 2. Toggle the 'dark-theme' class on the body
     body.classList.toggle('dark-theme');
 
-    // Optional: Save the user's preference using local storage
     if (body.classList.contains('dark-theme')) {
         localStorage.setItem('theme', 'dark');
     } else {
