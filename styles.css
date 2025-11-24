@@ -166,23 +166,34 @@ a:hover {
 
 /* --- DARK MODE STYLES --- */
 body.dark-theme {
-    background-color: #121212; /* Dark background */
-    color: #f5f5f5; /* Light text */
+    background-color: #121212; /* Darker background */
+    color: #f5f5f5; /* Light text for readability */
 }
 
+/* Base link color update for all standard links */
+body.dark-theme a {
+    color: #80cbc4; /* Bright teal for contrast */
+}
+
+body.dark-theme a:hover {
+    color: #4db6ac; /* Slightly darker teal on hover */
+}
+
+/* Header and Navigation Styles */
 body.dark-theme header {
-    background-color: #004d40; /* Darker navy/teal */
+    background-color: #004d40; /* Dark teal/navy for header */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 body.dark-theme nav ul li a {
-    color: #b2dfdb; /* Lighter link color */
+    color: #b2dfdb; /* Light color for primary navigation links */
 }
 
 body.dark-theme nav ul li a:hover {
     color: #80cbc4;
 }
 
+/* Section and Main Content Styles */
 body.dark-theme section {
     background-color: #1e1e1e; /* Dark section background */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -193,10 +204,12 @@ body.dark-theme section h3 {
     color: #e0f2f1; /* Light headings */
 }
 
+/* Footer Styles */
 body.dark-theme footer {
     background-color: #004d40;
 }
 
+/* Button Styles (Applied to Dark Mode Toggle and Project Buttons) */
 body.dark-theme .toggle-btn {
     background-color: #e0f2f1;
     color: #121212;
