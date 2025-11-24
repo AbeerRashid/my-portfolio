@@ -219,6 +219,11 @@ body.dark-theme .toggle-btn:hover {
     background-color: #80cbc4;
 }
 
+/* PROFILE PICTURE STYLES IN DARK MODE */
+body.dark-theme .profile-pic {
+    border: 5px solid #4db6ac; /* Change border color to a light teal */
+}
+
 /* PROFILE PICTURE STYLES */
 .profile-pic {
     width: 200px;
