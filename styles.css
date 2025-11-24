@@ -219,6 +219,12 @@ body.dark-theme .toggle-btn:hover {
     background-color: #80cbc4;
 }
 
+/* This targets ALL paragraphs and list items inside the dark sections */
+body.dark-theme section p,
+body.dark-theme section li {
+    color: #f5f5f5; /* Light text color for readability */
+}
+
 /* PROFILE PICTURE STYLES IN DARK MODE */
 body.dark-theme .profile-pic {
     border: 5px solid #4db6ac; /* Change border color to a light teal */
