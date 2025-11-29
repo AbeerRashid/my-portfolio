@@ -1,24 +1,28 @@
-// // index.html
+// // index.html, projects.html
 // This block handles the Project Detail Toggle buttons
-const buttons = document.querySelectorAll('.toggle-btn');
+const projectToggleButtons = document.querySelectorAll('#projects .toggle-btn');
 
-// SAFETY CHECK: Only runs if there are buttons on the page (e.g., projects.html or index.html)
-if (buttons.length > 0) {
-    buttons.forEach(button => {
+// SAFETY CHECK: Only runs if there are project toggle buttons on the page.
+if (projectToggleButtons.length > 0) {
+    projectToggleButtons.forEach(button => {
         button.addEventListener('click', () => {
             const details = button.nextElementSibling;
+            
+            // 1. Toggle the visibility class
             details.classList.toggle('show');
+            
+            // 2. ONLY Update the button text for the Project Detail (NOT Dark Mode)
             if (details.classList.contains('show')) {
-                button.textContent = 'Dark Mode';
+                button.textContent = 'Hide Details'; // Updated text for projects
             } else {
-                button.textContent = 'Light Mode';
+                button.textContent = 'Show Details'; // Updated text for projects
             }
         });
     });
 }
 
 
-// CONTACT FORM VALIDATION
+// CONTACT FORM VALIDATION (No changes needed, logic is sound)
 const form = document.getElementById('contact-form');
 
 // SAFETY CHECK: Only executes the validation logic if the contact form is present
@@ -61,10 +65,13 @@ if (form) {
         }
 
         const emailValue = emailInput.value.trim();
+        // Added a slightly more robust regex check for email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+        
         if (emailValue === '') {
             showError(emailInput, 'Please enter your email.');
             isValid = false;
-        } else if (!emailValue.includes('@') || !emailValue.includes('.')) {
+        } else if (!emailRegex.test(emailValue)) {
             showError(emailInput, 'Please enter a valid email address.');
             isValid = false;
         } else {
@@ -80,76 +87,58 @@ if (form) {
 
         if (isValid) {
             alert('Thank you! Your message has been sent successfully.');
+            // Optionally clear the success message after a delay if you were using the DOM element
+            // const successMsg = document.getElementById('form-success');
+            // if(successMsg) successMsg.textContent = "Thank you! Your message has been sent successfully.";
             form.reset();
         }
     });
 }
 
 
+// DARK MODE THEME TOGGLE LOGIC
+
+// Helper function to set the button text based on the current theme
+function updateThemeButtonText(button, isDark) {
+    if (button) {
+        button.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    }
+}
+
 // Function to handle the dark mode toggle
 function toggleTheme() {
     const body = document.body;
+    const toggleButton = document.getElementById('theme-toggle');
+    
     body.classList.toggle('dark-theme');
+    const isDark = body.classList.contains('dark-theme');
 
-    if (body.classList.contains('dark-theme')) {
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.setItem('theme', 'light');
-    }
+    // Update button text and save preference
+    updateThemeButtonText(toggleButton, isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
 // Check for stored preference when the page loads
 function loadTheme() {
     const savedTheme = localStorage.getItem('theme');
+    const toggleButton = document.getElementById('theme-toggle');
+
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
+        updateThemeButtonText(toggleButton, true);
+    } else {
+         // Default to light and set button text if no preference or 'light' is saved
+        updateThemeButtonText(toggleButton, false);
     }
 }
 
 // Add event listener to the button once the document is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Load the saved theme first
+    // 1. Load the saved theme first (and sets button text)
     loadTheme();
-    
-    // 2. Find the button by its ID ('theme-toggle')
+    // 2. Set up the event listener for the toggle button
     const toggleButton = document.getElementById('theme-toggle');
-
-    // 3. Attach the toggle function to the button click event
     if (toggleButton) {
         toggleButton.addEventListener('click', toggleTheme);
-    }
-});
-
-// MODAL/IMAGE POPUP LOGIC
-document.addEventListener('DOMContentLoaded', () => {
-    const imgLink = document.getElementById('profile-link');
-    
-    // SAFETY CHECK: Only executes the modal logic if the profile image link exists
-    if (imgLink) { 
-        const modal = document.getElementById('image-modal');
-        const modalImg = document.getElementById("img01");
-        const closeBtn = document.getElementsByClassName("close-btn")[0];
-
-        // When the user clicks on the image link, open the modal
-        imgLink.addEventListener('click', function(event) {
-            event.preventDefault(); 
-            
-            modal.style.display = "block";
-            modalImg.src = this.href; 
-        });
-
-        // When the user clicks on (x), close the modal
-        if (closeBtn) {
-            closeBtn.onclick = function() { 
-                modal.style.display = "none";
-            }
-        }
-        
-        // When the user clicks anywhere outside of the modal content, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
     }
 });
